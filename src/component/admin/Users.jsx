@@ -1,11 +1,9 @@
-// src/component/admin/Users.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AdminLayout from "./AdminLayout";
+import Sidebar from "./Sidebar";
 import "./Users.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -16,7 +14,6 @@ const Users = () => {
     role: "",
   });
 
-  // Fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -38,12 +35,10 @@ const Users = () => {
     fetchUsers();
   }, []);
 
-  // Handle edit form changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Edit button clicked
   const handleEdit = (user) => {
     setEditingUser(user._id);
     setFormData({
@@ -53,13 +48,11 @@ const Users = () => {
     });
   };
 
-  // Cancel edit
   const cancelEdit = () => {
     setEditingUser(null);
     setFormData({ name: "", email: "", role: "" });
   };
 
-  // Submit edit
   const handleUpdate = async (id) => {
     try {
       await axios.put(`/api/v2/admin/user/${id}`, formData, {
@@ -69,7 +62,6 @@ const Users = () => {
       toast.success("User updated");
       setEditingUser(null);
 
-      // Refresh users
       const { data } = await axios.get("/api/v2/admin/users", {
         withCredentials: true,
       });
@@ -80,7 +72,6 @@ const Users = () => {
     }
   };
 
-  // Delete user
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
@@ -98,7 +89,8 @@ const Users = () => {
   };
 
   return (
-    <AdminLayout>
+    <div className="admin-panel">
+      <Sidebar />
       <div className="users-container">
         <h2>All Users</h2>
         <div className="user-cards">
@@ -156,9 +148,9 @@ const Users = () => {
             ))
           )}
         </div>
+        <ToastContainer position="bottom-center" />
       </div>
-      <ToastContainer position="bottom-center" />
-    </AdminLayout>
+    </div>
   );
 };
 
