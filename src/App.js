@@ -41,6 +41,10 @@ import LikedCourses from "./more/LikedCourses";
 import ProtectedRoute from "./route/ProtectedRoute";
 import Store from "./Store";
 
+// ✅ Admin Pages
+import Dashboard from "./component/admin/Dashboard";
+import Users from "./component/admin/Users";
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -63,6 +67,7 @@ function App() {
   return (
     <Router>
       {isAuthenticated && <UserData user={user} />}
+
       <Switch>
         {/* ✅ Public Routes */}
         <Route exact path="/" component={Home} />
@@ -81,25 +86,63 @@ function App() {
 
         {/* ✅ eSewa Payment Routes */}
         <Route exact path="/payment/:id" component={Payment} />
-        <Route exact path="/payment/success/:transactionId" component={PaymentSuccess} />
-        <Route exact path="/payment/failure" component={() => <h2>❌ Payment Failed</h2>} />
+        <Route
+          exact
+          path="/payment/success/:transactionId"
+          component={PaymentSuccess}
+        />
+        <Route
+          exact
+          path="/payment/failure"
+          component={() => <h2>❌ Payment Failed</h2>}
+        />
 
         {/* ✅ Course Routes */}
         <Route exact path="/course/:id" component={CourseDetailPage} />
-        <ProtectedRoute exact path="/course/:id/learn" component={CourseLessonView} />
+        <ProtectedRoute
+          exact
+          path="/course/:id/learn"
+          component={CourseLessonView}
+        />
 
         {/* ✅ Account Routes */}
         <Route exact path="/password/forgot" component={ForgotPassword} />
-        <Route exact path="/password/reset/:token" component={ResetPassword} />
+        <Route
+          exact
+          path="/password/reset/:token"
+          component={ResetPassword}
+        />
         <ProtectedRoute exact path="/me" component={Profile} />
         <ProtectedRoute exact path="/me/update" component={UpdatePassword} />
-        <ProtectedRoute exact path="/me/update/profile" component={EditProfile} />
+        <ProtectedRoute
+          exact
+          path="/me/update/profile"
+          component={EditProfile}
+        />
         <ProtectedRoute exact path="/settings" component={AccountSettings} />
         <ProtectedRoute exact path="/favorites" component={Favorites} />
         <ProtectedRoute exact path="/me/liked" component={LikedCourses} />
-        <ProtectedRoute exact path="/me/purchased" component={MyPurchasedCourses} />
+        <ProtectedRoute
+          exact
+          path="/me/purchased"
+          component={MyPurchasedCourses}
+        />
 
-        {/* 404 */}
+        {/* ✅ Admin Routes */}
+        <ProtectedRoute
+          exact
+          path="/admin/dashboard"
+          component={Dashboard}
+          isAdmin={true}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/users"
+          component={Users}
+          isAdmin={true}
+        />
+
+        {/* ❌ 404 Not Found */}
         <Route component={Notfound} />
       </Switch>
     </Router>

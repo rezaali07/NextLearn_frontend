@@ -322,7 +322,7 @@ const LoginSignup = ({ history, location }) => {
       // Check if the user is an admin
       if (user && user.role === "admin") {
         // Redirect to the admin dashboard
-        history.push("dashboard");
+        history.push("/admin/dashboard");
       } else {
         // Redirect to the user dashboard or home
         history.push(redirect);
