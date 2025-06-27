@@ -22,7 +22,7 @@ const Dashboard = () => {
             <p>View and manage users</p>
           </Link>
 
-          <Link to="/admin/course/new" className="card">
+          <Link to="/admin/addCourse" className="card">
             <h2>Add Course</h2>
             <p>Create a new course</p>
           </Link>

@@ -44,6 +44,9 @@ import Store from "./Store";
 // ✅ Admin Pages
 import Dashboard from "./component/admin/Dashboard";
 import Users from "./component/admin/Users";
+import Category from "./component/admin/Category";
+import Course from "./component/admin/Course";
+import AddCourse from "./component/admin/AddCourse";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -139,6 +142,24 @@ function App() {
           exact
           path="/admin/users"
           component={Users}
+          isAdmin={true}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/categories"
+          component={Category}
+          isAdmin={true}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/courses"
+          component={Course}
+          isAdmin={true}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/addCourse"
+          component={AddCourse}
           isAdmin={true}
         />
 
