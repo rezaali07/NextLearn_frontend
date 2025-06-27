@@ -1,0 +1,13 @@
+.banner {
+  height: 70vh;
+  margin: 60px;
+  position: relative;
+  background-color: #376A80;
+
+}
+
+.bgImg {
+  width: 100%;
+  height: 100vh;
+  object-fit: fill;
+}
