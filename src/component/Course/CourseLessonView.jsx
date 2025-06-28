@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import Header from "../Home/Header";
 import Footer from "../../more/Footer";
@@ -7,7 +7,9 @@ import BottomTab from "../../more/BottomTab";
 import "./CourseLessonView.css";
 
 const CourseLessonView = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Course ID
+  const history = useHistory();
+
   const [course, setCourse] = useState(null);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
 
@@ -24,7 +26,8 @@ const CourseLessonView = () => {
   }, [id]);
 
   if (!course) return <p>Loading course data...</p>;
-  if (!course.lessons || course.lessons.length === 0) return <p>No lessons found.</p>;
+  if (!course.lessons || course.lessons.length === 0)
+    return <p>No lessons found.</p>;
 
   const currentLesson = course.lessons[currentLessonIndex];
 
@@ -40,10 +43,14 @@ const CourseLessonView = () => {
     }
   };
 
+  const handleQuiz = () => {
+    // ✅ Corrected route to the frontend quiz page
+    history.push(`/course/${id}/quiz`);
+  };
+
   const renderVideo = () => {
     const { videoUrl } = currentLesson;
 
-    // If YouTube URL, embed via iframe
     if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
       let videoId = "";
 
@@ -67,14 +74,8 @@ const CourseLessonView = () => {
       );
     }
 
-    // Default video tag for direct file URLs
     return (
-      <video
-        controls
-        width="100%"
-        src={videoUrl}
-        className="lesson-video"
-      />
+      <video controls width="100%" src={videoUrl} className="lesson-video" />
     );
   };
 
@@ -101,14 +102,16 @@ const CourseLessonView = () => {
         {/* Main Content */}
         <main className="lesson-main">
           <div className="lesson-header">
-            <h2>{course.title}</h2>
-            <button className="quiz-button">Quiz</button>
+            <h2>{currentLesson.title}</h2>
+            <button className="quiz-button" onClick={handleQuiz}>
+              Quiz
+            </button>
           </div>
 
           <div className="lesson-content-box">
             {renderVideo()}
             <div className="lesson-description">
-              <p><strong></strong> {currentLesson.content}</p>
+              <p>{currentLesson.content}</p>
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Draggable from "react-draggable";
 import "./UserOption.css";
 import { SpeedDial, SpeedDialAction } from "@material-ui/lab";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -16,12 +17,11 @@ import { logout } from "../actions/UserActions";
 
 const UserData = ({ user }) => {
   const favouriteItems = useSelector((state) => state.favourite?.favouriteItems || []);
-
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const dashboard = () => history.push("/dashboard");
+  const dashboard = () => history.push("/admin/dashboard");
   const home = () => history.push("/");
   const favourite = () => history.push("/favourites");
   const account = () => history.push("/me");
@@ -37,9 +37,7 @@ const UserData = ({ user }) => {
     { icon: <HomeIcon />, name: "Home", func: home },
     {
       icon: (
-        <HeartIcon
-          style={{ color: favouriteItems.length > 0 ? "tomato" : "gray" }}
-        />
+        <HeartIcon style={{ color: favouriteItems.length > 0 ? "tomato" : "gray" }} />
       ),
       name: `Favourites (${favouriteItems.length})`,
       func: favourite,
@@ -50,56 +48,50 @@ const UserData = ({ user }) => {
   ];
 
   if (user?.role === "admin" || user?.role === "Creator") {
-    options.unshift({
-      icon: <DashboardIcon />,
-      name: "Dashboard",
-      func: dashboard,
-    });
+    options.unshift({ icon: <DashboardIcon />, name: "Dashboard", func: dashboard });
   }
 
   return (
     <>
       <Backdrop
         open={open}
-        style={{ zIndex: 10, backgroundColor: "rgba(0,0,0,0.5)" }}
+        style={{ zIndex: 10, backgroundColor: "rgba(0,0,0,0.3)" }}
       />
-      <SpeedDial
-        ariaLabel="User Options"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-        direction="down"
-        className="speedDial"
-        icon={
-          <img
-            className="speedDialIcon"
-            src={user?.avatar?.url || "/profile.png"}
-            alt="Profile"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/profile.png";
-            }}
-          />
-        }
-      >
-        {options.map((item) => (
-          <SpeedDialAction
-            key={item.name}
-            icon={item.icon}
-            tooltipTitle={item.name}
-            onClick={item.func}
-            tooltipOpen
-            classes={{ tooltip: "customTooltip" }}
-          />
-        ))}
-      </SpeedDial>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        closeOnClick
-        draggable
-      />
+      <Draggable bounds="body">
+        <div style={{ position: "fixed", zIndex: 100, bottom: "10%", right: "10%" }}>
+          <SpeedDial
+            ariaLabel="User Options"
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
+            open={open}
+            direction="down"
+            className="speedDial"
+            icon={
+              <img
+                className="speedDialIcon"
+                src={user?.avatar?.url || "/profile.png"}
+                alt="Profile"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/profile.png";
+                }}
+              />
+            }
+          >
+            {options.map((item) => (
+              <SpeedDialAction
+                key={item.name}
+                icon={item.icon}
+                tooltipTitle={item.name}
+                onClick={item.func}
+                tooltipOpen
+              />
+            ))}
+          </SpeedDial>
+        </div>
+      </Draggable>
+
+      <ToastContainer position="bottom-center" autoClose={3000} />
     </>
   );
 };

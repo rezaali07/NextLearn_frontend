@@ -1,7 +1,7 @@
 .speedDial {
   position: fixed;
   bottom: 120px;
-  right: 5px;
+  right: -110px;
   z-index: 11;
   animation: fadeIn 1s ease-in-out;
 
@@ -33,3 +33,8 @@
   border-radius: 4px !important;
 
 }
+.speedDialIcon {
+  border: 2px solid #ccc;
+  border-radius: 50%;
+}
+

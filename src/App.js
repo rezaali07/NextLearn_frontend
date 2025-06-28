@@ -51,6 +51,9 @@ import LessonManagement from "./component/admin/LessonManagement";
 import QuizManagement from "./component/admin/QuizManagement";
 import EarningsDashboard from "./component/admin/EarningsDashboard";
 
+// ✅ Quiz Page
+import Quiz from "./component/Course/Quiz"; // 💡 Make sure this path is correct
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -110,6 +113,9 @@ function App() {
           path="/course/:id/learn"
           component={CourseLessonView}
         />
+
+        {/* ✅ Quiz Route */}
+        <ProtectedRoute exact path="/course/:id/quiz" component={Quiz} />
 
         {/* ✅ Account Routes */}
         <Route exact path="/password/forgot" component={ForgotPassword} />
@@ -177,14 +183,12 @@ function App() {
           component={QuizManagement}
           isAdmin={true}
         />
-        
         <ProtectedRoute
           exact
           path="/admin/earnings"
           component={EarningsDashboard}
           isAdmin={true}
         />
-
 
         {/* ❌ 404 Not Found */}
         <Route component={Notfound} />
