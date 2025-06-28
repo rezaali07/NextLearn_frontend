@@ -31,6 +31,7 @@
     "react-chartjs-2": "^4.0.0",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
+    "react-icons": "^5.5.0",
     "react-js-pagination": "^3.0.3",
     "react-material-ui-carousel": "^2.3.1",
     "react-rating-stars-component": "^2.2.0",

@@ -49,6 +49,7 @@ import Course from "./component/admin/Course";
 import AddCourse from "./component/admin/AddCourse";
 import LessonManagement from "./component/admin/LessonManagement";
 import QuizManagement from "./component/admin/QuizManagement";
+import EarningsDashboard from "./component/admin/EarningsDashboard";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -176,6 +177,14 @@ function App() {
           component={QuizManagement}
           isAdmin={true}
         />
+        
+        <ProtectedRoute
+          exact
+          path="/admin/earnings"
+          component={EarningsDashboard}
+          isAdmin={true}
+        />
+
 
         {/* ❌ 404 Not Found */}
         <Route component={Notfound} />
