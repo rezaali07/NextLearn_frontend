@@ -47,6 +47,8 @@ import Users from "./component/admin/Users";
 import Category from "./component/admin/Category";
 import Course from "./component/admin/Course";
 import AddCourse from "./component/admin/AddCourse";
+import LessonManagement from "./component/admin/LessonManagement";
+import QuizManagement from "./component/admin/QuizManagement";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -160,6 +162,18 @@ function App() {
           exact
           path="/admin/addCourse"
           component={AddCourse}
+          isAdmin={true}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/lessonManagement"
+          component={LessonManagement}
+          isAdmin={true}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/quizManagement"
+          component={QuizManagement}
           isAdmin={true}
         />
 
