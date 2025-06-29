@@ -345,7 +345,7 @@ const CourseLessonView = () => {
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [completedLessons, setCompletedLessons] = useState([]);
 
-  // 1) Fetch course data and user's lesson-progress on mount
+  // 1) Fetch course & progress on mount
   useEffect(() => {
     const fetchCourse = async () => {
       try {
@@ -360,14 +360,11 @@ const CourseLessonView = () => {
 
     const fetchLessonProgress = async () => {
       try {
-        const { data } = await axios.get("/api/v2/users/me", {
+        const { data } = await axios.get(`/api/v2/courses/${id}/lesson-progress`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        // find this course's progress record
-        const prog = data.user.lessonProgress.find(
-          (p) => p.course._id === id
-        );
-        if (prog) setCompletedLessons(prog.lessonsCompleted || []);
+        console.log("📡 [API] GET /lesson-progress →", data.lessonsCompleted);
+        setCompletedLessons(data.lessonsCompleted || []);
       } catch (err) {
         console.error("Failed to fetch lesson progress", err);
       }
@@ -383,7 +380,7 @@ const CourseLessonView = () => {
   const currentLesson = course.lessons[currentLessonIndex];
   const isCompleted = completedLessons.includes(currentLesson._id);
 
-  // 2) Toggle read/unread: POST to mark, DELETE to unmark
+  // 2) Toggle mark/unmark
   const toggleLessonCompletion = async () => {
     try {
       if (isCompleted) {
@@ -392,9 +389,7 @@ const CourseLessonView = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log("📡 [API] DELETE /lessons/complete");
-        setCompletedLessons((prev) =>
-          prev.filter((lid) => lid !== currentLesson._id)
-        );
+        setCompletedLessons((prev) => prev.filter((lid) => lid !== currentLesson._id));
       } else {
         await axios.post(
           `/api/v2/courses/${id}/lessons/${currentLesson._id}/complete`,
@@ -424,10 +419,9 @@ const CourseLessonView = () => {
   const renderVideo = () => {
     const { videoUrl } = currentLesson;
     if (/youtu/.test(videoUrl)) {
-      let videoId =
-        videoUrl.includes("youtu.be")
-          ? videoUrl.split("youtu.be/")[1].split("?")[0]
-          : new URLSearchParams(new URL(videoUrl).search).get("v");
+      let videoId = videoUrl.includes("youtu.be")
+        ? videoUrl.split("youtu.be/")[1].split("?")[0]
+        : new URLSearchParams(new URL(videoUrl).search).get("v");
       return (
         <iframe
           width="100%"
@@ -442,7 +436,7 @@ const CourseLessonView = () => {
       );
     }
     return (
-      <video controls width="100%" src={currentLesson.videoUrl} className="lesson-video" />
+      <video controls width="100%" src={videoUrl} className="lesson-video" />
     );
   };
 
