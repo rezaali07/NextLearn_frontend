@@ -24,7 +24,6 @@
 //         console.error("Error fetching quizzes:", error);
 //       }
 //     };
-
 //     fetchQuiz();
 //   }, [courseId]);
 
@@ -94,53 +93,76 @@
 //         </p>
 
 //         {/* Question */}
-//         <div className="question-box">
-//           <h3>{currentQuestion.questionText}</h3>
-//           <ul className="option-list">
-//             {currentQuestion.options.map((option, idx) => (
-//               <li key={idx}>
-//                 <label>
-//                   <input
-//                     type="radio"
-//                     name="option"
-//                     value={option}
-//                     checked={selectedOption === option}
-//                     onChange={() => handleOptionChange(option)}
-//                     disabled={submitted}
-//                   />
-//                   {option}
-//                 </label>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
+//         {!submitted && (
+//           <div className="question-box">
+//             <h3>{currentQuestion.questionText}</h3>
+//             <ul className="option-list">
+//               {currentQuestion.options.map((option, idx) => (
+//                 <li key={idx}>
+//                   <label>
+//                     <input
+//                       type="radio"
+//                       name="option"
+//                       value={option}
+//                       checked={selectedOption === option}
+//                       onChange={() => handleOptionChange(option)}
+//                     />
+//                     {option}
+//                   </label>
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//         )}
 
 //         {/* Navigation Buttons */}
-//         <div className="quiz-buttons">
-//           <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>
-//             ⬅ Previous
-//           </button>
-
-//           {currentQuestionIndex === totalQuestions - 1 ? (
-//             <button onClick={handleSubmit} disabled={submitted}>
-//               ✅ Submit
+//         {!submitted && (
+//           <div className="quiz-buttons">
+//             <button onClick={handlePrev} disabled={currentQuestionIndex === 0}>
+//               ⬅ Previous
 //             </button>
-//           ) : (
-//             <button
-//               onClick={handleNext}
-//               disabled={!selectedOption}
-//             >
-//               Next ➡
-//             </button>
-//           )}
-//         </div>
 
-//         {/* Results */}
+//             {currentQuestionIndex === totalQuestions - 1 ? (
+//               <button onClick={handleSubmit} disabled={!selectedOption}>
+//                 ✅ Submit
+//               </button>
+//             ) : (
+//               <button onClick={handleNext} disabled={!selectedOption}>
+//                 Next ➡
+//               </button>
+//             )}
+//           </div>
+//         )}
+
+//         {/* Final Result */}
 //         {submitted && (
 //           <div className="quiz-result">
-//             <h4>
-//               🎉 You got {correctCount} out of {totalQuestions} correct!
-//             </h4>
+//             <h3>🎉 You got {correctCount} out of {totalQuestions} correct!</h3>
+
+//             <div className="quiz-overview">
+//               <h4>📋 Answer Review</h4>
+//               <ol>
+//                 {quizzes.map((q, index) => (
+//                   <li key={index} className="review-question">
+//                     <strong>Q{index + 1}: {q.questionText}</strong>
+//                     <p>
+//                       Your Answer:{" "}
+//                       <span
+//                         style={{
+//                           color:
+//                             answers[index] === q.correctAnswer
+//                               ? "green"
+//                               : "red",
+//                         }}
+//                       >
+//                         {answers[index] || "Not answered"}
+//                       </span>
+//                     </p>
+//                     <p>Correct Answer: ✅ {q.correctAnswer}</p>
+//                   </li>
+//                 ))}
+//               </ol>
+//             </div>
 //           </div>
 //         )}
 //       </div>
@@ -178,6 +200,7 @@ const Quiz = () => {
         console.error("Error fetching quizzes:", error);
       }
     };
+
     fetchQuiz();
   }, [courseId]);
 
@@ -212,13 +235,32 @@ const Quiz = () => {
     setSelectedOption(option);
   };
 
-  const handleSubmit = () => {
-    setAnswers((prev) => {
-      const updated = [...prev];
-      updated[currentQuestionIndex] = selectedOption;
-      return updated;
-    });
+  const handleSubmit = async () => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[currentQuestionIndex] = selectedOption;
+    setAnswers(updatedAnswers);
     setSubmitted(true);
+
+    const quizResult = quizzes.map((q, i) => ({
+      questionId: q._id,
+      questionText: q.questionText,
+      selectedOption: updatedAnswers[i],
+      correctAnswer: q.correctAnswer,
+      isCorrect: updatedAnswers[i] === q.correctAnswer,
+    }));
+
+    const score = quizResult.filter((res) => res.isCorrect).length;
+
+    try {
+      await axios.post("/api/v2/courses/quiz/progress", {
+        courseId,
+        score,
+        answers: quizResult,
+      });
+      console.log("✅ Quiz progress saved");
+    } catch (err) {
+      console.error("❌ Failed to save quiz progress:", err);
+    }
   };
 
   const correctCount = quizzes.reduce((acc, question, index) => {

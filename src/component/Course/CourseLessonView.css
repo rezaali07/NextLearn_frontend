@@ -181,3 +181,15 @@ body.visual-aid {
     align-items: stretch;
   }
 }
+
+.completed-lesson {
+  background-color: #e0f5e0;
+  color: #1a6b1a;
+  font-weight: bold;
+}
+
+.mark-read-btn.completed {
+  background-color: #c1eac5;
+  color: #165a1f;
+  border: 1px solid #88cc99;
+}

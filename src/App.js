@@ -53,6 +53,7 @@ import EarningsDashboard from "./component/admin/EarningsDashboard";
 
 // ✅ Quiz Page
 import Quiz from "./component/Course/Quiz"; // 💡 Make sure this path is correct
+import QuizProgress from "./more/QuizProgress";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -92,6 +93,7 @@ function App() {
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/faq" component={Rules} />
         <Route exact path="/creator" component={CommingSoon} />
+        
 
         {/* ✅ eSewa Payment Routes */}
         <Route exact path="/payment/:id" component={Payment} />
@@ -116,6 +118,9 @@ function App() {
 
         {/* ✅ Quiz Route */}
         <ProtectedRoute exact path="/course/:id/quiz" component={Quiz} />
+        <ProtectedRoute exact path="/me/quiz-progress" component={QuizProgress} />
+        
+
 
         {/* ✅ Account Routes */}
         <Route exact path="/password/forgot" component={ForgotPassword} />
