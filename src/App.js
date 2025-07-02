@@ -56,6 +56,7 @@ import Quiz from "./component/Course/Quiz"; // 💡 Make sure this path is corre
 import QuizProgress from "./more/QuizProgress";
 import CourseProgress from "./more/CourseProgress";
 import ActivityLog from "./more/ActivityLog";
+import AdminNotifications from "./component/admin/Notifications";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -204,6 +205,14 @@ function App() {
           component={EarningsDashboard}
           isAdmin={true}
         />
+
+        <ProtectedRoute
+          exact
+          path="/admin/notifications"
+          component={AdminNotifications}
+          isAdmin={true}
+        />
+
 
         {/* ❌ 404 Not Found */}
         <Route component={Notfound} />

@@ -23,7 +23,7 @@ const UserData = ({ user }) => {
 
   const dashboard = () => history.push("/admin/dashboard");
   const home = () => history.push("/");
-  const favourite = () => history.push("/favourites");
+  const favourite = () => history.push("/favorites");
   const account = () => history.push("/me");
   const settings = () => history.push("/settings");
   const report = () => history.push("/support");
@@ -39,7 +39,7 @@ const UserData = ({ user }) => {
       icon: (
         <HeartIcon style={{ color: favouriteItems.length > 0 ? "tomato" : "gray" }} />
       ),
-      name: `Favourites (${favouriteItems.length})`,
+      name: `Favorite`,
       func: favourite,
     },
     { icon: <Support />, name: "Report Us", func: report },
