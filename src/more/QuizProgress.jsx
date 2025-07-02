@@ -139,7 +139,7 @@ const QuizProgress = () => {
 
                 console.log(
                   `Entry ${index}: ${entry.course?.title} - ${percent}%`
-                );
+                ); 
 
                 return (
                   <tr key={index}>
