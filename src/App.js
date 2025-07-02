@@ -54,6 +54,7 @@ import EarningsDashboard from "./component/admin/EarningsDashboard";
 // ✅ Quiz Page
 import Quiz from "./component/Course/Quiz"; // 💡 Make sure this path is correct
 import QuizProgress from "./more/QuizProgress";
+import CourseProgress from "./more/CourseProgress";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -119,7 +120,10 @@ function App() {
         {/* ✅ Quiz Route */}
         <ProtectedRoute exact path="/course/:id/quiz" component={Quiz} />
         <ProtectedRoute exact path="/me/quiz-progress" component={QuizProgress} />
+
+        {/* ✅ Course progress Route */}
         
+        <ProtectedRoute exact path="/me/course-progress" component={CourseProgress}isAdmin={false}/>
 
 
         {/* ✅ Account Routes */}

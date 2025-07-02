@@ -202,6 +202,13 @@ const AccountSettings = () => {
       action: () => (window.location.href = "/me/quiz-progress"),
     },
     {
+      title: "Course Progress",
+      desc: "Track your Course performance over time",
+      button: "View Progress",
+      icon: "📊",
+      action: () => (window.location.href = "/me/course-progress"),
+    },
+    {
       title: "My Purchase",
       icon: "\ud83d\uded2",
       button: "View",

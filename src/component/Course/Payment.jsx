@@ -9,7 +9,6 @@ import Footer from "../../more/Footer";
 import Header from "../Home/Header";
 import "react-toastify/dist/ReactToastify.css";
 import "./Payment.css";
-
 const Payment = () => {
   const { id } = useParams(); // courseId
   const [course, setCourse] = useState(null);
