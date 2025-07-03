@@ -192,4 +192,14 @@
 }
 
 
+.course-price.original {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 8px;
+}
+
+.course-price.discounted {
+  color: #e63946;
+  font-weight: bold;
+}
 

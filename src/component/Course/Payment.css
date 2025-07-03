@@ -1,51 +1,117 @@
-.paymentContainer {
+.paymentCardContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
-  padding: 20px;
-  background-color: var(--bg);
+  padding: 3rem 1rem;
+  background: #f4f4f4;
+  min-height: 100vh;
+  box-sizing: border-box;
+  margin-top: -80px;
 }
 
-.paymentForm {
-  background-color: var(--card-bg, #fff);
-  border-radius: 10px;
-  padding: 30px 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 400px;
+.paymentCard {
+  background-color: #fff;
+  padding: 2rem;
+  max-width: 420px;
   width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  text-align: center;
 }
 
-.paymentForm h2 {
-  margin-bottom: 20px;
-  font-size: 22px;
-  font-weight: bold;
-  color: var(--text, #333);
+.esewaLogo {
+  max-width: 120px;
+  margin: 0 auto 1.5rem;
+  display: block;
 }
 
-.paymentForm p {
-  margin: 10px 0;
-  font-size: 16px;
-  color: var(--text-light, #555);
-}
+@media (max-width: 480px) {
+  .paymentCard {
+    padding: 1.5rem 1rem;
+  }
 
-.paymentForm strong {
-  color: var(--accent, #1abc9c);
+  .esewaLogo {
+    max-width: 90px;
+  }
 }
 
 .paymentFormBtn {
-  margin-top: 20px;
-  padding: 12px 20px;
-  font-size: 16px;
-  background-color: #1abc9c;
+  background-color: #4CAF50; /* eSewa green */
   color: white;
+  font-size: 1rem;
+  padding: 0.85rem 1.5rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  width: 100%;
+  margin-top: 1.5rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .paymentFormBtn:hover {
-  background-color: #17a689;
+  background-color: #3e9e42;
+  transform: translateY(-2px);
+}
+
+.paymentFormBtn:active {
+  background-color: #368a38;
+  transform: translateY(0);
+}
+
+.paymentFormBtn:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+.couponForm {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.couponForm input[type="text"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.couponForm input[type="text"]:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.couponForm button {
+  padding: 0.75rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.couponForm button:hover {
+  background-color: #3e9e42;
+  transform: translateY(-1px);
+}
+
+.couponForm button:active {
+  background-color: #368a38;
+  transform: translateY(0);
+}
+
+.couponForm button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
 }

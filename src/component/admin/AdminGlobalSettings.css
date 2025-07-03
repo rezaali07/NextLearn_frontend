@@ -1,0 +1,18 @@
+.admin-dashboard {
+  display: flex;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.settings-content form input,
+.settings-content form select,
+.settings-content form button {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  padding: 10px;
+}

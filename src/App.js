@@ -57,26 +57,14 @@ import QuizProgress from "./more/QuizProgress";
 import CourseProgress from "./more/CourseProgress";
 import ActivityLog from "./more/ActivityLog";
 import AdminNotifications from "./component/admin/Notifications";
+import UserNotifications from "./component/notification/UserNotifications";
+import AdminGlobalSettings from "./component/admin/AdminGlobalSettings";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  const [stripeApiKey, setStripeApiKey] = useState("");
+  
 
-  async function getStripeApiKey() {
-    const { data } = await axios.get("/api/v2/stripeapikey");
-    setStripeApiKey(data.stripeApiKey);
-  }
-
-  useEffect(() => {
-    WebFont.load({
-      google: {
-        families: ["Roboto", "Droid Sans", "Chilanka"],
-      },
-    });
-    Store.dispatch(loadUser());
-    getStripeApiKey();
-  }, []);
-
+ 
   return (
     <Router>
       {isAuthenticated && <UserData user={user} />}
@@ -105,11 +93,19 @@ function App() {
           path="/payment/success/:transactionId"
           component={PaymentSuccess}
         />
+
         <Route
           exact
           path="/payment/failure"
           component={() => <h2>❌ Payment Failed</h2>}
         />
+
+        <Route
+          exact
+          path="/notifications"
+          component={UserNotifications}
+        />
+        
 
         {/* ✅ Course Routes */}
         <Route exact path="/course/:id" component={CourseDetailPage} />
@@ -203,6 +199,12 @@ function App() {
           exact
           path="/admin/earnings"
           component={EarningsDashboard}
+          isAdmin={true}
+        />
+        <ProtectedRoute
+          exact
+          path="/admin/offerSettings"
+          component={AdminGlobalSettings}
           isAdmin={true}
         />
 
