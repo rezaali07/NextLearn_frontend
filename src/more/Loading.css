@@ -9,7 +9,7 @@
     flex-direction: column;
 }
 
-label{
+/* label{
   position: relative;
   height: 125px;
   width: 125px;
@@ -18,7 +18,7 @@ label{
   border-radius: 50%;
   border-left-color: #5cb85c;
   animation: rotate 1.2s linear infinite;
-}
+} */
 @keyframes rotate {
   50%{
     border-left-color: #9b59b6;

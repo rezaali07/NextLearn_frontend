@@ -1,24 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import WebFont from "webfontloader";
-import { loadUser } from "./actions/UserActions";
 import "./App.css";
 
 // Pages & Components
 import About from "./component/about/About";
 import LoginSign from "./component/Authentication/LoginSign";
-import Favorites from "./component/Course/Favorites";
-import Payment from "./component/Course/Payment";
-import PaymentSuccess from "./component/Course/PaymentSuccess";
 import CourseDetailPage from "./component/Course/CourseDetailPage";
 import CourseLessonView from "./component/Course/CourseLessonView";
+import Favorites from "./component/Course/Favorites";
 import MyPurchasedCourses from "./component/Course/MyPurchasedCourses";
+import Payment from "./component/Course/Payment";
+import PaymentSuccess from "./component/Course/PaymentSuccess";
 
 import Home from "./component/Home/Home";
-import Products from "./component/Products/products";
 import productDetails from "./component/Products/ProductDetails";
+import Products from "./component/Products/products";
 import Search from "./component/Products/Search";
 
 import EditProfile from "./component/user/EditProfile";
@@ -28,43 +24,46 @@ import Profile from "./component/user/Profile";
 import ResetPassword from "./component/user/ResetPassword";
 import UpdatePassword from "./component/user/UpdatePassword";
 
+import AccountSettings from "./more/AccountSettings";
 import CommingSoon from "./more/CommingSoon";
 import Contact from "./more/Contact";
+import LikedCourses from "./more/LikedCourses";
 import Loading from "./more/Loader";
 import Notfound from "./more/Notfound";
 import Rules from "./more/Rules";
 import Support from "./more/Support";
 import UserData from "./more/UserData";
-import AccountSettings from "./more/AccountSettings";
-import LikedCourses from "./more/LikedCourses";
 
 import ProtectedRoute from "./route/ProtectedRoute";
-import Store from "./Store";
 
 // ✅ Admin Pages
-import Dashboard from "./component/admin/Dashboard";
-import Users from "./component/admin/Users";
+import AddCourse from "./component/admin/AddCourse";
 import Category from "./component/admin/Category";
 import Course from "./component/admin/Course";
-import AddCourse from "./component/admin/AddCourse";
+import Dashboard from "./component/admin/Dashboard";
+import EarningsDashboard from "./component/admin/EarningsDashboard";
 import LessonManagement from "./component/admin/LessonManagement";
 import QuizManagement from "./component/admin/QuizManagement";
-import EarningsDashboard from "./component/admin/EarningsDashboard";
+import Users from "./component/admin/Users";
 
 // ✅ Quiz Page
-import Quiz from "./component/Course/Quiz"; // 💡 Make sure this path is correct
-import QuizProgress from "./more/QuizProgress";
-import CourseProgress from "./more/CourseProgress";
-import ActivityLog from "./more/ActivityLog";
-import AdminNotifications from "./component/admin/Notifications";
-import UserNotifications from "./component/notification/UserNotifications";
 import AdminGlobalSettings from "./component/admin/AdminGlobalSettings";
+import CollegeManagement from "./component/admin/manage_college/CollegeManagement";
+import AdminNotifications from "./component/admin/Notifications";
+import Quiz from "./component/Course/Quiz"; // 💡 Make sure this path is correct
+import UserNotifications from "./component/notification/UserNotifications";
+import ActivityLog from "./more/ActivityLog";
+import CourseProgress from "./more/CourseProgress";
+import QuizProgress from "./more/QuizProgress";
+import AddCollege from "./component/admin/manage_college/AddCollege";
+import EditCollege from "./component/admin/manage_college/EditCollege";
+import CollegeCategoriesPrograms from "./component/admin/manage_college/CollegeCategoriesPrograms";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  
 
- 
+
+
   return (
     <Router>
       {isAuthenticated && <UserData user={user} />}
@@ -84,7 +83,7 @@ function App() {
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/faq" component={Rules} />
         <Route exact path="/creator" component={CommingSoon} />
-        
+
 
         {/* ✅ eSewa Payment Routes */}
         <Route exact path="/payment/:id" component={Payment} />
@@ -105,7 +104,7 @@ function App() {
           path="/notifications"
           component={UserNotifications}
         />
-        
+
 
         {/* ✅ Course Routes */}
         <Route exact path="/course/:id" component={CourseDetailPage} />
@@ -120,12 +119,12 @@ function App() {
         <ProtectedRoute exact path="/me/quiz-progress" component={QuizProgress} />
 
         {/* ✅ Course progress Route */}
-        
-        <ProtectedRoute exact path="/me/course-progress" component={CourseProgress}isAdmin={false}/>
+
+        <ProtectedRoute exact path="/me/course-progress" component={CourseProgress} isAdmin={false} />
 
         {/* ✅ Activity log Route */}
-        
-        <ProtectedRoute exact path="/activity" component={ActivityLog}isAdmin={false}/>
+
+        <ProtectedRoute exact path="/activity" component={ActivityLog} isAdmin={false} />
 
 
 
@@ -215,6 +214,34 @@ function App() {
           isAdmin={true}
         />
 
+        <ProtectedRoute
+          exact
+          path="/admin/collegeManagement"
+          component={CollegeManagement}
+          isAdmin={true}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/admin/addCollege"
+          component={AddCollege}
+          isAdmin={true}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/admin/editCollege"
+          component={EditCollege}
+          isAdmin={true}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/admin/collegeCategoriesPrograms"
+          component={ CollegeCategoriesPrograms}
+          isAdmin={true}
+        />
+ 
 
         {/* ❌ 404 Not Found */}
         <Route component={Notfound} />

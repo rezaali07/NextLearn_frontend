@@ -159,7 +159,7 @@ const AdminNotifications = () => {
                         >
                           Edit
                         </button>
-                        <button onClick={() => handleDelete(notif._id)}>
+                        <button className="deleteBtn" onClick={() => handleDelete(notif._id)}>
                           Delete
                         </button>
                       </>

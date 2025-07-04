@@ -11,8 +11,7 @@ import Footer from "../../more/Footer";
 import BottomTab from "../../more/BottomTab";
 import ChatSupport from "../../component/Home/chat_support";
 import LikeButton from "../../more/LikeButton";
-
-import CourseAccessButton from "../../component/Course/CourseAccessButton"; // ✅ imported access logic component
+import CourseAccessButton from "../../component/Course/CourseAccessButton";
 
 import "./CourseDetailPage.css";
 
@@ -20,6 +19,7 @@ const CourseDetailPage = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
   const [images, setImages] = useState([]);
+  const [priceInfo, setPriceInfo] = useState(null);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -35,6 +35,13 @@ const CourseDetailPage = () => {
         } else {
           setImages(["https://via.placeholder.com/300x200?text=No+Image"]);
         }
+
+        // Also fetch global pricing logic (offer/coupon)
+        const priceRes = await axios.post("/api/checkout/price", {
+          courseId: id,
+        });
+
+        setPriceInfo(priceRes.data);
       } catch (err) {
         console.error("Error loading course:", err);
       }
@@ -43,7 +50,7 @@ const CourseDetailPage = () => {
     fetchCourse();
   }, [id]);
 
-  if (!course) return <p>Loading...</p>;
+  if (!course || !priceInfo) return <p>Loading...</p>;
 
   return (
     <>
@@ -87,7 +94,26 @@ const CourseDetailPage = () => {
 
           <div className="course-price">
             <strong>Price:</strong>{" "}
-            {course.type === "Paid" ? `₹${course.price}` : "Free"}
+            {course.type === "Free" ? (
+              "Free"
+            ) : (
+              <>
+                {priceInfo.offerPrice && priceInfo.offerPrice !== priceInfo.originalPrice ? (
+                  <>
+                    <span style={{ textDecoration: "line-through", color: "gray" }}>
+                      ₹{priceInfo.originalPrice.toFixed(2)}
+                    </span>{" "}
+                    <span style={{ color: "green", fontWeight: "bold" }}>
+                      ₹{priceInfo.finalPrice.toFixed(2)}
+                    </span>
+                  </>
+                ) : (
+                  <span style={{ fontWeight: "bold" }}>
+                    ₹{priceInfo.finalPrice.toFixed(2)}
+                  </span>
+                )}
+              </>
+            )}
           </div>
 
           <div className="course-created">
@@ -118,7 +144,6 @@ const CourseDetailPage = () => {
               )}
             </ul>
 
-            {/* ✅ Separated access logic here */}
             <CourseAccessButton course={course} />
           </div>
         </div>

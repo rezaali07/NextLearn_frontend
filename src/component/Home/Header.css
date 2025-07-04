@@ -1,8 +1,17 @@
 /* ===================== */
+/* Default Theme (Light) */
+/* ===================== */
+body {
+  background-color: #f0f0f0;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ===================== */
 /* General Navbar Styling */
 /* ===================== */
 .navbar {
-  background-color: #376A80; /* Default Orange */
+  background-color: #376A80;
   padding: 10px 40px;
   display: flex;
   justify-content: space-between;
@@ -23,17 +32,14 @@
   gap: 30px;
 }
 
-
-
 .navigation .logo {
   height: 75px;
-  width: 100px; /* Set the logo width to 100px */
+  width: 100px;
   margin-right: 10px;
   cursor: pointer;
   margin-top: 10px;
 }
 
-/* Navigation Links */
 .navigation ul {
   display: flex;
   list-style: none;
@@ -50,29 +56,16 @@
   transition: color 0.3s ease;
 }
 
-/* Hover effect */
 .navigation ul li a:hover {
   color: rgb(0, 0, 0);
 }
 
-/* ===================== */
-/* Active Link Styling   */
-/* ===================== */
+/* Active Link Styling */
 .active-link {
   background-color: white;
   color: black !important;
   padding: 10px 15px;
   border-radius: 5px;
-}
-
-body.visual-aid .active-link {
-  background-color: white;
-  color: black !important;
-}
-
-body.dark-mode .active-link {
-  background-color: white;
-  color: black !important;
 }
 
 /* ===================== */
@@ -85,7 +78,6 @@ body.dark-mode .active-link {
   margin-right: 50px;
 }
 
-/* Icon Links */
 .icon-link {
   position: relative;
   display: flex;
@@ -102,9 +94,8 @@ body.dark-mode .active-link {
   fill: rgb(0, 0, 0);
 }
 
-/* Badge Styling */
 .badge {
-  background-color: red;
+  background-color: rgb(237, 4, 4);
   color: white;
   font-size: 12px;
   font-weight: bold;
@@ -119,23 +110,29 @@ body.dark-mode .active-link {
   right: -5px;
 }
 
-
 /* ===================== */
 /* Theme Select Dropdown */
 /* ===================== */
-.theme-select {
+.theme-select,
+select {
   padding: 6px 10px;
   border-radius: 5px;
   font-weight: bold;
-  border: none;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
   cursor: pointer;
 }
 
 /* ===================== */
-/* Theme Support         */
+/* Dark Mode Theme       */
 /* ===================== */
+body.dark-mode {
+  background-color: #333;
+  color: #f0f0f0;
+}
 
-/* Dark Mode */
 body.dark-mode .navbar {
   background-color: #1a1a1a;
 }
@@ -152,11 +149,26 @@ body.dark-mode .icon-link {
   color: #e0e0e0;
 }
 
-body.dark-mode .navigation ul li a.active-link {
+body.dark-mode .active-link {
+  background-color: white;
   color: black !important;
 }
 
-/* Visual Aid Mode */
+body.dark-mode select,
+body.dark-mode .theme-select {
+  background-color: #444;
+  color: #fff;
+  border-color: #555;
+}
+
+/* ===================== */
+/* Visual Aid Theme      */
+/* ===================== */
+body.visual-aid {
+  background-color: #ffffcc;
+  color: #00698f;
+}
+
 body.visual-aid .navbar {
   background-color: #ffffff;
   border-bottom: 2px solid #000;
@@ -178,15 +190,23 @@ body.visual-aid .badge {
   background-color: #000;
 }
 
-body.visual-aid .navigation ul li a.active-link {
+body.visual-aid .active-link {
+  background-color: white;
   color: black !important;
+}
+
+body.visual-aid select,
+body.visual-aid .theme-select {
+  background-color: #ccffcc;
+  color: #00698f;
+  border-color: #99ff99;
 }
 
 /* ===================== */
 /* Scroll Effects        */
 /* ===================== */
 .navbar.active {
-  background-color: #376A80; 
+  background-color: #376A80;
 }
 
 .navbar.scrolled {
@@ -221,6 +241,25 @@ body.visual-aid .navigation ul li a.active-link {
     align-items: flex-start;
     gap: 10px;
     margin-top: 10px;
-
   }
+}
+
+/* ===================== */
+/* Notices Link          */
+/* ===================== */
+.notices-link {
+  color: #ffffff !important;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.notices-link:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+/* Fix Notices Link in Visual Aid Mode */
+body.visual-aid .notices-link {
+  color: #000 !important;
 }
