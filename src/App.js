@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Pages & Components
 import About from "./component/about/About";
@@ -58,6 +59,11 @@ import QuizProgress from "./more/QuizProgress";
 import AddCollege from "./component/admin/manage_college/AddCollege";
 import EditCollege from "./component/admin/manage_college/EditCollege";
 import CollegeCategoriesPrograms from "./component/admin/manage_college/CollegeCategoriesPrograms";
+import College from "./component/information/Colleges";
+import Colleges from "./component/information/Colleges";
+import ProgramColleges from "./component/information/ProgramColleges";
+import CategoryColleges from "./component/information/CategoryColleges";
+import CollegeDetail from "./component/information/CollegeDetail";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -71,6 +77,7 @@ function App() {
       <Switch>
         {/* ✅ Public Routes */}
         <Route exact path="/" component={Home} />
+
         <Route exact path="/product/:id" component={productDetails} />
         <Route exact path="/load" component={Loading} />
         <Route exact path="/login" component={LoginSign} />
@@ -83,6 +90,12 @@ function App() {
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/faq" component={Rules} />
         <Route exact path="/creator" component={CommingSoon} />
+        <Route exact path="/colleges" component={Colleges} />
+        <Route exact path="/college-category/:slug" component={CategoryColleges} />
+        <Route exact path="/college-program/:slug" component={ProgramColleges} />
+        <Route exact path="/college/:slug" component={CollegeDetail} />
+
+
 
 
         {/* ✅ eSewa Payment Routes */}

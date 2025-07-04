@@ -126,6 +126,9 @@ const Header = () => {
                 </div>
               )}
             </li>
+            <li>
+              <NavLink to="/colleges">Colleges</NavLink>
+            </li>
           </ul>
         </div>
 
