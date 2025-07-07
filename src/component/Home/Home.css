@@ -10,12 +10,14 @@
   top: 0;
   bottom: 0;
   left: 5%;
+  
   display: flex;
   width: 100vh;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   z-index: 10;
+  
 }
 
 button.Home__button {
@@ -48,10 +50,9 @@ button.Home__button {
 }
 
 .course-heading-container {
-  margin-top: 240px
-
+  
+  margin-top: -80px;
 }
-
 
 /* ===================== Pagination ===================== */
 .pagination {
@@ -140,6 +141,28 @@ h1.discountPrice {
   padding-left: 10px;
 }
 
+/* ===================== Carousel Styles ===================== */
+.carousel-container {
+  width: 100%;
+  height: 600px;
+}
+
+.carousel {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-item {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ===================== Responsive ===================== */
 @media screen and (max-width: 600px) {
   .ProductCard > p {
@@ -158,6 +181,14 @@ h1.discountPrice {
   .ProductCard > div > span {
     margin: 0 0.5vmax;
     font: 300 1vmax "Roboto";
+  }
+
+  .course-card-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .carousel-container {
+    height: 300px;
   }
 }
 
@@ -211,7 +242,7 @@ h1.discountPrice {
 /* See More link */
 .see-more {
   text-align: center;
-  color: #007bff;
+  color: #216ea4;
   cursor: pointer;
   padding: 10px 0;
   font-weight: 700;

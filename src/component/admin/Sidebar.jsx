@@ -19,6 +19,7 @@ const Sidebar = () => {
         <li><Link to="/admin/notifications">Notification Management</Link></li>
         <li><Link to="/admin/offerSettings">Offer Management</Link></li>
         <li><Link to="/admin/CollegeManagement">College Management</Link></li>
+        <li><Link to="/admin/adminExamManagement">Exam Routine Management</Link></li>
       </ul>
     </div>  
   );

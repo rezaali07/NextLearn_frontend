@@ -6,12 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./Store";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "./ThemeContext"; // ✅ import it
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-    <App />
-  </Provider>
+      <ThemeProvider> {/* ✅ wrap with ThemeProvider */}
+        <App />
+      </ThemeProvider>
+    </Provider>
   </BrowserRouter>,
   document.getElementById("root")
 );

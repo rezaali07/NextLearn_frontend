@@ -38,7 +38,10 @@ const FavoriteButton = ({ courseId }) => {
       } else {
         await axios.post(`/api/v2/courses/${courseId}/favorite`, {}, { headers });
       }
-      setIsFavorite((prev) => !prev); // This instantly updates the icon
+      setIsFavorite((prev) => !prev);
+
+      // Dispatch custom event so Header can update favorite count immediately
+      window.dispatchEvent(new Event("favoriteUpdated"));
     } catch (error) {
       console.error("Error toggling favorite:", error);
     } finally {
@@ -52,10 +55,10 @@ const FavoriteButton = ({ courseId }) => {
       onClick={toggleFavorite}
       title={isFavorite ? "Unfavorite Course" : "Add to Favorites"}
       className={`icon ${isFavorite ? "favorited" : ""}`}
-      style={{ 
+      style={{
         cursor: loading ? "not-allowed" : "pointer",
         color: isFavorite ? "red" : undefined,
-        opacity: loading ? 0.6 : 1 
+        opacity: loading ? 0.6 : 1,
       }}
       disabled={loading}
     />

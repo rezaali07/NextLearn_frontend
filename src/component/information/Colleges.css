@@ -281,7 +281,135 @@ h2 {
   margin-top: 30px;
   margin-bottom: 15px;
 }
+.colleges-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
 
+.colleges-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.search-box {
+  margin-bottom: 40px;
+}
+
+.search-box input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.categories-section,
+.programs-section {
+  margin-bottom: 40px;
+}
+
+.categories-cards,
+.programs-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.category-card,
+.program-card {
+  width: calc(25% - 15px);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.category-card.selected,
+.program-card.selected {
+  border-color: #4CAF50;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.category-image,
+.program-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.category-name,
+.program-name {
+  padding: 10px;
+  text-align: center;
+}
+
+.colleges-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.college-card {
+  width: calc(33.33% - 13.33px);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.college-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-content h2 {
+  margin-top: 0;
+}
+
+.card-tags {
+  margin-bottom: 20px;
+}
+
+.btn-view {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-view:hover {
+  background-color: #3e8e41;
+}
+
+@media (max-width: 768px) {
+  .category-card,
+  .program-card {
+    width: calc(50% - 10px);
+  }
+
+  .college-card {
+    width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .category-card,
+  .program-card {
+    width: 100%;
+  }
+
+  .college-card {
+    width: 100%;
+  }
+}
 
 
 
@@ -307,7 +435,7 @@ h2 {
 
 .search-box {
   width: 100%;
-  max-width: 400px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 10px;
   border: 1px solid #ddd;
@@ -411,4 +539,27 @@ h2 {
 
 .selected {
   border: 2px solid #4CAF50;
+}
+
+.search-results {
+  position: absolute;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 50%;
+  z-index: 1;
+  margin-left: -10px;
+  max-width: 700px;
+}
+
+.search-results a {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-decoration: none;
+  color: #333;
+}
+
+.search-results a:hover {
+  background-color: #f0f0f0;
 }

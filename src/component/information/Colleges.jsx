@@ -13,12 +13,6 @@ const Colleges = () => {
   const [categories, setCategories] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [search, setSearch] = useState("");
-  const [filterCategory, setFilterCategory] = useState("");
-  const [filterProgram, setFilterProgram] = useState("");
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fixImageUrl = (img) => {
     if (!img) return null;
@@ -35,55 +29,43 @@ const Colleges = () => {
     return BACKEND_URL + cleanPath;
   };
 
-  const fetchData = async () => {
-    try {
-      const [collegesRes, categoriesRes, programsRes] = await Promise.all([
-        axios.get("/api/v2/colleges"),
-        axios.get("/api/v2/college-categories"),
-        axios.get("/api/v2/college-programs"),
-      ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [collegesRes, categoriesRes, programsRes] = await Promise.all([
+          axios.get("/api/v2/colleges"),
+          axios.get("/api/v2/college-categories"),
+          axios.get("/api/v2/college-programs"),
+        ]);
 
-      setColleges(collegesRes.data);
+        setColleges(collegesRes.data);
 
-      const fixedCategories = categoriesRes.data.map((cat) => ({
-        ...cat,
-        image: fixImageUrl(cat.image),
-      }));
+        setCategories(
+          categoriesRes.data.map((cat) => ({
+            ...cat,
+            image: fixImageUrl(cat.image),
+          }))
+        );
 
-      const fixedPrograms = programsRes.data.map((prog) => ({
-        ...prog,
-        image: fixImageUrl(prog.image),
-      }));
+        setPrograms(
+          programsRes.data.map((prog) => ({
+            ...prog,
+            image: fixImageUrl(prog.image),
+          }))
+        );
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
 
-      setCategories(fixedCategories);
-      setPrograms(fixedPrograms);
-    } catch (err) {
-      console.error("Error fetching data:", err);
-    }
-  };
-
-  const toggleCategoryFilter = (id) => {
-    setFilterCategory((prev) => (prev === id ? "" : id));
-  };
-
-  const toggleProgramFilter = (id) => {
-    setFilterProgram((prev) => (prev === id ? "" : id));
-  };
+    fetchData();
+  }, []);
 
   const filteredColleges = colleges.filter((college) => {
-    const matchesSearch =
+    return (
       college.name.toLowerCase().includes(search.toLowerCase()) ||
-      (college.city && college.city.toLowerCase().includes(search.toLowerCase()));
-
-    const matchesCategory =
-      !filterCategory ||
-      college.collegeCategories?.some((cat) => cat === filterCategory || cat._id === filterCategory);
-
-    const matchesProgram =
-      !filterProgram ||
-      college.collegePrograms?.some((prog) => prog === filterProgram || prog._id === filterProgram);
-
-    return matchesSearch && matchesCategory && matchesProgram;
+      (college.city && college.city.toLowerCase().includes(search.toLowerCase()))
+    );
   });
 
   return (
@@ -102,6 +84,15 @@ const Colleges = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
+            {search && (
+              <div className="search-results">
+                {filteredColleges.slice(0, 5).map((college) => (
+                  <Link key={college._id} to={`/college/${college.slug}`}>
+                    {college.name}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Category Cards */}
@@ -112,7 +103,7 @@ const Colleges = () => {
                 <Link
                   to={`/college-category/${cat.slug}`}
                   key={cat._id}
-                  className={`category-card ${filterCategory === cat._id ? "selected" : ""}`}
+                  className="category-card"
                   title={cat.name}
                 >
                   <img
@@ -134,7 +125,7 @@ const Colleges = () => {
                 <Link
                   to={`/college-program/${prog.slug}`}
                   key={prog._id}
-                  className={`program-card ${filterProgram === prog._id ? "selected" : ""}`}
+                  className="program-card"
                   title={prog.name}
                 >
                   <img

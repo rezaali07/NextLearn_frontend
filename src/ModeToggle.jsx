@@ -1,34 +1,18 @@
-import React, { useState, useEffect } from "react";
+// src/component/mode/ModeToggle.jsx
+import React, { useContext, useState } from "react";
+import { ThemeContext } from "../../context/ThemeContext"; // ✅ import context
+import "./ModeToggle.css"; // Optional styling
 
 const ModeToggle = () => {
-  const [mode, setMode] = useState(() => {
-    // Load initial mode from localStorage or default
-    return localStorage.getItem("themeMode") || "default";
-  });
-
+  const { mode, setMode } = useContext(ThemeContext); // ✅ use global state
   const [showOptions, setShowOptions] = useState(false);
-
-  useEffect(() => {
-    // Remove all modes first
-    document.body.classList.remove("visual-aid", "dark-mode");
-
-    // Add selected mode class
-    if (mode === "visual-aid") {
-      document.body.classList.add("visual-aid");
-    } else if (mode === "dark") {
-      document.body.classList.add("dark-mode");
-    }
-
-    // Save mode in localStorage
-    localStorage.setItem("themeMode", mode);
-  }, [mode]);
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
+    <div style={{ display: "flex", alignItems: "center", position: "fixed", top: 10, right: 20, zIndex: 100 }}>
       <div
         onClick={toggleOptions}
         style={{
@@ -36,6 +20,7 @@ const ModeToggle = () => {
           fontSize: "24px",
           marginRight: "10px",
         }}
+        title="Toggle Accessibility Mode"
       >
         👁️
       </div>
@@ -43,7 +28,12 @@ const ModeToggle = () => {
         <select
           value={mode}
           onChange={(e) => setMode(e.target.value)}
-          style={{ padding: "5px" }}
+          style={{
+            padding: "5px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            background: "#fff",
+          }}
         >
           <option value="default">Default</option>
           <option value="visual-aid">Visual Aid</option>

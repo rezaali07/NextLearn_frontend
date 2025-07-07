@@ -61,12 +61,12 @@ body {
 }
 
 /* Active Link Styling */
-.active-link {
+/* .active-link {
   background-color: white;
   color: black !important;
   padding: 10px 15px;
   border-radius: 5px;
-}
+} */
 
 /* ===================== */
 /* Right Side Icons      */
@@ -149,10 +149,10 @@ body.dark-mode .icon-link {
   color: #e0e0e0;
 }
 
-body.dark-mode .active-link {
+/* body.dark-mode .active-link {
   background-color: white;
   color: black !important;
-}
+} */
 
 body.dark-mode select,
 body.dark-mode .theme-select {
@@ -190,10 +190,10 @@ body.visual-aid .badge {
   background-color: #000;
 }
 
-body.visual-aid .active-link {
+/* body.visual-aid .active-link {
   background-color: white;
   color: black !important;
-}
+} */
 
 body.visual-aid select,
 body.visual-aid .theme-select {
@@ -205,9 +205,9 @@ body.visual-aid .theme-select {
 /* ===================== */
 /* Scroll Effects        */
 /* ===================== */
-.navbar.active {
+/* .navbar.active {
   background-color: #376A80;
-}
+} */
 
 .navbar.scrolled {
   background-color: #000;
