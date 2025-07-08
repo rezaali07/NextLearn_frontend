@@ -10,7 +10,7 @@
   transition: transform 0.3s ease;
   background-color: #fff;
 }
-
+ 
 .course-card:hover {
   transform: scale(1.03);
 }

@@ -1,13 +1,20 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import WebFont from "webfontloader";
 import { loadUser } from "./actions/UserActions";
 import Store from "./Store";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import "./App.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+
+// Import your FTUE modal component
+import FTUETour from "./more/modals/FTUETour"; 
+import ArrowGuide from "./more/modals/ArrowGuide"; 
 
 // Pages & Components
 import About from "./component/about/About";
@@ -19,9 +26,7 @@ import MyPurchasedCourses from "./component/Course/MyPurchasedCourses";
 import Payment from "./component/Course/Payment";
 import PaymentSuccess from "./component/Course/PaymentSuccess";
 import Home from "./component/Home/Home";
-import ProductDetails from "./component/Products/ProductDetails"; // ✅ FIXED
-import Products from "./component/Products/products";
-import Search from "./component/Products/Search";
+
 import EditProfile from "./component/user/EditProfile";
 import ForgotPassword from "./component/user/ForgotPassword";
 import MoreOption from "./component/user/MoreOption";
@@ -78,34 +83,104 @@ import ExamRoutine from "./component/information/ExamRoutine";
 import CourseSearch from "./component/Course/CourseSearch";
 import Courses from "./component/Home/Courses";
 
-// ❌ Extract Payment Failure from inline
 const PaymentFailure = () => <h2>❌ Payment Failed</h2>;
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const [showTour, setShowTour] = useState(false);
+
+  // Arrow guide multiple steps state
+  const arrows = [
+    { targetId: "nav-dashboard-btn", label: "Go to Dashboard" },
+    { targetId: "nav-courses-btn", label: "Start here" },
+    { targetId: "nav-notifications-btn", label: "Check notifications" },
+    { targetId: "nav-favorites-btn", label: "View your favorite courses" },
+    { targetId: "nav-colleges-btn", label: "Browse colleges" },
+    { targetId: "nav-routines-btn", label: "See exam routines" },
+    { targetId: "nav-search-btn", label: "Search courses" },
+    { targetId: "nav-theme-btn", label: "Switch theme mode" },
+    { targetId: "nav-user-btn", label: "User profile & login" },
+  ];
+
+  const [currentArrowIndex, setCurrentArrowIndex] = useState(0);
+  const [showArrow, setShowArrow] = useState(false);
 
   useEffect(() => {
     WebFont.load({
-      google: {
-        families: ["Roboto", "Droid Sans", "Chilanka"],
-      },
+      google: { families: ["Roboto", "Droid Sans", "Chilanka"] },
     });
     Store.dispatch(loadUser());
   }, []);
 
+  useEffect(() => {
+    const ftueCompleted = localStorage.getItem("ftueCompleted");
+
+    if (user && !user.isFirstTimeUser) {
+      localStorage.removeItem("ftueCompleted");
+      setShowTour(false);
+      return;
+    }
+
+    if (isAuthenticated && user?.isFirstTimeUser && !ftueCompleted) {
+      setShowTour(true);
+    } else {
+      setShowTour(false);
+    }
+  }, [isAuthenticated, user]);
+
+  const updateTourStatus = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put("/api/v2/update-tour-status", {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      localStorage.setItem("ftueCompleted", "true");
+    } catch (error) {
+      console.error("Failed to update tour status on backend:", error);
+    }
+  };
+
+  const handleTourFinish = async () => {
+    await updateTourStatus();
+    setShowTour(false);
+    setShowArrow(true);
+    setCurrentArrowIndex(0);
+  };
+
+  const handleTourSkip = async () => {
+    await updateTourStatus();
+    setShowTour(false);
+    setShowArrow(true);
+    setCurrentArrowIndex(0);
+  };
+
+  // When the arrow guide hides, show next arrow or stop
+  const handleArrowHide = () => {
+    if (currentArrowIndex < arrows.length - 1) {
+      setCurrentArrowIndex(currentArrowIndex + 1);
+    } else {
+      setShowArrow(false);
+    }
+  };
+
   return (
     <Router>
       {isAuthenticated && <UserData user={user} />}
-      <Switch>
+      {showTour && <FTUETour onFinish={handleTourFinish} onSkip={handleTourSkip} />}
 
-        {/* ✅ Public Routes */}
+      {showArrow && (
+        <ArrowGuide
+          targetId={arrows[currentArrowIndex].targetId}
+          label={arrows[currentArrowIndex].label}
+          onHide={handleArrowHide}
+        />
+      )}
+
+      <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/product/:id" component={ProductDetails} />
         <Route exact path="/load" component={Loading} />
         <Route exact path="/login" component={LoginSign} />
         <Route exact path="/about" component={About} />
-        <Route exact path="/products" component={Products} />
-        <Route exact path="/products/:keyword" component={Products} />
         <Route exact path="/support" component={Support} />
         <Route exact path="/more" component={MoreOption} />
         <Route exact path="/contact" component={Contact} />
@@ -119,25 +194,20 @@ function App() {
         <Route exact path="/search" component={CourseSearch} />
         <Route exact path="/courses" component={Courses} />
 
-        {/* ✅ eSewa Payment Routes */}
         <Route exact path="/payment/:id" component={Payment} />
         <Route exact path="/payment/success/:transactionId" component={PaymentSuccess} />
         <Route exact path="/payment/failure" component={PaymentFailure} />
 
-        {/* ✅ Notification */}
         <Route exact path="/notifications" component={UserNotifications} />
 
-        {/* ✅ Course Routes */}
         <Route exact path="/course/:id" component={CourseDetailPage} />
         <ProtectedRoute exact path="/course/:id/learn" component={CourseLessonView} />
 
-        {/* ✅ Quiz Routes */}
         <ProtectedRoute exact path="/course/:id/quiz" component={Quiz} />
         <ProtectedRoute exact path="/me/quiz-progress" component={QuizProgress} />
         <ProtectedRoute exact path="/me/course-progress" component={CourseProgress} />
         <ProtectedRoute exact path="/activity" component={ActivityLog} />
 
-        {/* ✅ User Account */}
         <Route exact path="/password/forgot" component={ForgotPassword} />
         <Route exact path="/password/reset/:token" component={ResetPassword} />
         <ProtectedRoute exact path="/me" component={Profile} />
@@ -148,7 +218,6 @@ function App() {
         <ProtectedRoute exact path="/me/liked" component={LikedCourses} />
         <ProtectedRoute exact path="/me/purchased" component={MyPurchasedCourses} />
 
-        {/* ✅ Admin Routes */}
         <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} isAdmin={true} />
         <ProtectedRoute exact path="/admin/users" component={Users} isAdmin={true} />
         <ProtectedRoute exact path="/admin/categories" component={Category} isAdmin={true} />
@@ -165,12 +234,11 @@ function App() {
         <ProtectedRoute exact path="/admin/collegeCategoriesPrograms" component={CollegeCategoriesPrograms} isAdmin={true} />
         <ProtectedRoute exact path="/admin/adminExamManagement" component={AdminExamManagement} isAdmin={true} />
 
-        {/* ❌ 404 Not Found */}
         <Route component={Notfound} />
-
       </Switch>
     </Router>
   );
 }
 
-export default App;
+export default App; 
+

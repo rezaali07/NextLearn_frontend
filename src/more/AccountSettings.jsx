@@ -35,11 +35,11 @@ const AccountSettings = () => {
       action: () => setShowChangeEmail(true),
     },
     {
-      title: "Favourite Courses",
+      title: "favorites Courses",
       desc: "View your liked courses",
-      button: "View Favourites",
+      button: "View Favorites",
       icon: "\u2764\ufe0f",
-      action: () => (window.location.href = "/favourites"),
+      action: () => (window.location.href = "/favorites"),
     },
     {
       title: "Courses You Liked",
@@ -53,14 +53,14 @@ const AccountSettings = () => {
       desc: "Courses you've finished",
       button: "View Completed",
       icon: "\ud83d\udcc4",
-      action: () => (window.location.href = "/me/courses/completed"),
+      action: () => (window.location.href = "/me/course-progress"),
     },
     {
       title: "Course in Progress",
       desc: "Continue your learning",
       button: "Resume Learning",
       icon: "\u23f3",
-      action: () => (window.location.href = "/me/courses/active"),
+      action: () => (window.location.href = "/me/course-progress"),
     },
     {
       title: "Gamification",

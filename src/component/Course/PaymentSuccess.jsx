@@ -92,7 +92,7 @@ const PaymentSuccess = () => {
 
   const goToCourse = () => {
     if (courseId) {
-      history.push(`/course/${courseId}`);
+      history.push(`/course/${courseId}/learn`); 
     }
   };
 

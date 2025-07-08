@@ -1,33 +1,34 @@
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-import "./Carousel.css";
-import image1 from "../../Assets/carousel/image1.png";
-import image2 from "../../Assets/carousel/image2.png";
-import image3 from "../../Assets/carousel/image3.png";
-import image4 from "../../Assets/carousel/image4.png";
+import "./StudentReviewCarousel.css"; // ✅ New CSS file
+import image1 from "../../Assets/student_review/image1.png";
+import image2 from "../../Assets/student_review/image2.png";
+import image3 from "../../Assets/student_review/image3.png";
+import image4 from "../../Assets/student_review/image4.png";
 
 const items = [
   {
     image: image1,
-    alt: "Family",
+    alt: "Student 1",
   },
   {
     image: image2,
-    alt: "Shopping background 1",
+    alt: "Student 2",
   },
   {
     image: image3,
-    alt: "Shopping background 2",
+    alt: "Student 3",
   },
   {
     image: image4,
-    alt: "Shopping background 3",
+    alt: "Student 4",
   },
 ];
 
-const CustomCarousel = () => {
+const StudentReviewCarousel = () => {
   return (
-    <div className="carousel-container">
+    <div className="student-carousel-section">
+      <h2 className="homeHeading">🌟 What Our Students Say</h2>
       <Carousel
         className="carousel"
         autoPlay={true}
@@ -38,7 +39,7 @@ const CustomCarousel = () => {
         navButtonsProps={{
           style: {
             backgroundColor: "transparent",
-            borderRadius: 0,
+            color: "#333",
           },
         }}
         indicatorContainerProps={{
@@ -58,4 +59,4 @@ const CustomCarousel = () => {
   );
 };
 
-export default CustomCarousel;
+export default StudentReviewCarousel;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Home.css";
+import "./Courses.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCourses } from "../../actions/CourseActions";
 import CourseCard from "../../component/Course/CourseCard";
