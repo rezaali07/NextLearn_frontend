@@ -792,11 +792,11 @@ const Header = () => {
             <img src={live_logo_gif} alt="Next Learn Logo" className="logo" />
           </Link>
           <ul>
-            <li>
+            {/* <li>
               <NavLink id="nav-dashboard-link" exact to="/" activeClassName="active">
                 Dashboard
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink id="nav-courses-btn" to="/courses" activeClassName="active">
                 Courses
@@ -843,11 +843,7 @@ const Header = () => {
                 </div>
               )}
             </li>
-            <li>
-              <NavLink id="nav-favorites-btn" to="/favorites" activeClassName="active">
-                Favorites
-              </NavLink>
-            </li>
+            
             <li>
               <NavLink id="nav-colleges-btn" to="/colleges" activeClassName="active">
                 Colleges
