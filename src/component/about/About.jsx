@@ -29,7 +29,7 @@ const About = () => {
                 <div className="row flex">
                   <div className="col__2">
                     <img
-                      src="https://res.cloudinary.com/dig1ixe4q/image/upload/v1736784039/Designer_1_c4qiyz.jpg"
+                      src="https://res.cloudinary.com/dig1ixe4q/image/upload/v1753037483/Screenshot_2025-07-21_003106_fscwhx.png"
                       alt="NextLearn Illustration"
                     />
                   </div>

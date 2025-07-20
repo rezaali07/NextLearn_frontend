@@ -9,12 +9,13 @@ const AIAssistant = () => {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // 🟢 Toggle state
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleChat = () => setIsOpen(!isOpen);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+
     const userMsg = { role: "user", content: input };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
@@ -23,11 +24,13 @@ const AIAssistant = () => {
 
     try {
       const res = await axios.post("/api/ai/chat", {
-        messages: newMessages,
+        messages: newMessages, // ✅ Send full conversation history
       });
+
       const aiReply = res.data.reply;
       setMessages([...newMessages, { role: "assistant", content: aiReply }]);
     } catch (err) {
+      console.error("AI error:", err);
       setMessages([
         ...newMessages,
         { role: "assistant", content: "❌ Error: AI is not responding." },
